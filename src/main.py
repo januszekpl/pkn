@@ -5,9 +5,7 @@ from pkn_helper import *
 def main():
     # set required variables
     pkn_list = set_pkn_list()
-
-    # immersion thing
-    startgame_loading()
+    intro()
 
     # start game
     pkn(pkn_list)
