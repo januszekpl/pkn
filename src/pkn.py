@@ -1,43 +1,31 @@
-from pkn_helper import roll, wait, print_loading_dots, spell
+from pkn_helper import roll, wait, loading, spell, pkn_scenarios
 
 def pkn(pkn_list : list):
 
     while True:
-        pkn_cpu = roll(pkn_list)
-        spell("\nYour choose: ")
-        pkn_user = input(str())
         wait(1)
-
+        spell("Your choose: ", is_end=False)
+        pkn_user = input()
+        wait(1)
         # Validate user input
         if pkn_user not in pkn_list:
-            print("Wrong input, try again [rock][paper][scissors]")
+            spell("Wrong input, try again [rock, paper, scissors]")
             wait(1)
             continue
 
+        pkn_cpu = roll(pkn_list)
         spell("Cpu choose: ", pkn_cpu)
         wait(1)
-        spell("\nCalculating all possibilities")
-        print_loading_dots()
+        spell("Calculating all possibilities ", )
+        loading()
 
-        # Draw
         if pkn_user == pkn_cpu:
-            spell("Draw")
-            pkn_cpu = roll(pkn_list)
+            spell("\rDraw")
             continue
-
-        # Win/Lose scenarios
-        elif pkn_user == "rock":
-            if pkn_cpu == "paper":
-                spell("Lose")
-            else: spell("Win")
-        elif pkn_user == "paper":
-            if pkn_cpu == "scissors":
-                spell("Lose")
-            else: spell("Win")
-        elif pkn_user == "scissors":
-            if pkn_cpu == "rock":
-                spell("Lose")
-            else: spell("Win")
+        elif pkn_scenarios()[pkn_user] == pkn_cpu:
+            spell("\rWin")
+        else:
+            spell("\rLose")
         wait(1)
-        print("")
+        
         break

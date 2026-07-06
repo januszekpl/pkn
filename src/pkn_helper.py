@@ -1,5 +1,6 @@
 import random
 import time as t
+import subprocess
 
 def wait(n : int = 1):
     t.sleep(n)
@@ -24,22 +25,13 @@ def print_loading_dots(n : int = 50):
     print("")
 
 
-def startgame_loading():
-    print("")
-    wait()
+def intro():
+    subprocess.run("cls", shell=True)
+    wait(.5)
     spell("ROCK PAPER SCISSORS")
-    print("")
-    wait()
-    spell("LOADING THE GAME")
-    wait()
-    print_loading_dots()
-    wait()
-    print("")
-    spell("The game started, good luck!\n")
-    wait()
 
 
-def spell(print_to_spell : str, value_to_spell = ""):
+def spell(print_to_spell : str, value_to_spell = "", is_end=True):
 
     for letter in print_to_spell:
         print(letter, end="", flush=True)
@@ -49,3 +41,26 @@ def spell(print_to_spell : str, value_to_spell = ""):
     for e_from_value in value_to_spell:
         print(e_from_value, end="", flush=True)
         wait(.05)
+    
+    if is_end:
+        print("")
+
+
+def pkn_scenarios():
+    return {
+        "rock" : "scissors",
+        "paper" : "rock",
+        "scissors" : "paper"
+    }
+
+
+def loading(seconds=2):
+    spinner = "/-\\|"
+
+    end_time = t.time() + seconds
+    i = 0
+
+    while t.time() < end_time:
+        print(f"\r{spinner[i % len(spinner)]}", end="", flush=True)
+        t.sleep(0.1)
+        i += 1
